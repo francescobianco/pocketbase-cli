@@ -60,7 +60,7 @@ main() {
     insert)
       echo "Running insert command"
       collection="$2"
-      shift || true
+      shift 2 || true
       pocketbase_insert "$pocketbase_config" "$pocketbase_token" "$collection" "$@"
       ;;
     *)
