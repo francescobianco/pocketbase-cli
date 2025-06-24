@@ -6,6 +6,7 @@ main() {
   local list
   local pocketbase_config
   local pocketbase_token
+  local collection
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -58,7 +59,9 @@ main() {
   case "$1" in
     insert)
       echo "Running insert command"
-      pocketbase_insert "$pocketbase_config" "$pocketbase_token" "$2"
+      collection="$2"
+      shift || true
+      pocketbase_insert "$pocketbase_config" "$pocketbase_token" "$collection" "$@"
       ;;
     *)
       error "Unknown command: $1" 1
