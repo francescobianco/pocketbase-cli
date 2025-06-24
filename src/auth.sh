@@ -23,9 +23,10 @@ pocketbase_auth() {
   curl -s -X POST \
     -H "Content-Type: application/json" \
     -d '{"identity":"'"$pocketbase_auth_username"'","password":"'"$pocketbase_auth_password"'"}' \
-    "$url" > "$pocketbase_token"
+    "$url" | sed 's/.*"token"://' | cut -d'"' -f2 > "$pocketbase_token"
 
   echo "Authenticating with PocketBase at $pocketbase_url"
+
 
   #echo "TEST" > "$pocketbase_token"
 }

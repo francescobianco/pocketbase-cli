@@ -57,7 +57,8 @@ main() {
 
   case "$1" in
     insert)
-      pocketbase_insert "$pocketbase_token"
+      echo "Running insert command"
+      pocketbase_insert "$pocketbase_config" "$pocketbase_token" "$2"
       ;;
     *)
       error "Unknown command: $1" 1

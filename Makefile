@@ -12,4 +12,4 @@ push:
 test-insert:
 	@#node tests/insert-test.js
 	@rm -f .pocketbaserc.token
-	@mush run -- insert
+	@mush run -- insert Test
