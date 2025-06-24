@@ -1,10 +1,11 @@
 
+module auth
 module insert
 
 main() {
   local list
-  local webui_config
-  local webui_token
+  local pocketbase_config
+  local pocketbase_token
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -31,26 +32,24 @@ main() {
     shift
   done || true
 
-  if [ -n "$WEBUI_CONFIG" ]; then
-    webui_config=$WEBUI_CONFIG
-  elif [ -f "$PWD/.webuirc" ]; then
-    webui_config="$PWD/.webuirc"
+  if [ -n "$PB_CONFIG" ]; then
+    pocketbase_config=$PB_CONFIG
+  elif [ -f "$PWD/.pocketbaserc" ]; then
+    pocketbase_config="$PWD/.pocketbaserc"
   else
-    webui_config="$HOME/.webuirc"
+    pocketbase_config="$HOME/.pocketbaserc"
   fi
 
-  if [ -n "$WEBUI_TOKEN" ]; then
-    webui_token=$WEBUI_CONFIG
-  elif [ -f "$PWD/.webuirc" ]; then
-    webui_token="$PWD/.webuirc"
+  pocketbase_token="$(dirname "$pocketbase_config")/.pocketbaserc.token"
+  echo "Using PocketBase config: $pocketbase_config"
+  if [ -f "$pocketbase_token" ]; then
+    pocketbase_token=$(cat "$pocketbase_token")
   else
-    webui_token="$HOME/.webuirc"
+    pocketbase_auth $pocketbase_config $pocketbase_token
+    pocketbase_token=$(cat "$pocketbase_token")
   fi
 
-  if [ -n "$list" ]; then
-    my_print_list "$hosts"
-    exit
-  fi
+  echo "Using PocketBase token: $pocketbase_token"
 
   if [ "$#" -eq 0 ]; then
     error "No arguments supplied" 1
@@ -58,7 +57,7 @@ main() {
 
   case "$1" in
     insert)
-      pocketbase_insert "$webui_config" "$webui_token"
+      pocketbase_insert "$pocketbase_token"
       ;;
     *)
       error "Unknown command: $1" 1

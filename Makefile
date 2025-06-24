@@ -10,5 +10,6 @@ push:
 	@git push
 
 test-insert:
-	@node tests/insert-test.js
-	@#mush run -- insert
+	@#node tests/insert-test.js
+	@rm -f .pocketbaserc.token
+	@mush run -- insert

@@ -1,5 +1,12 @@
 
 pocketbase_insert() {
+  local pocketbase_config
+  local pocketbase_token
 
-  echo "TEST!"
+  pocketbase_config="$1"
+  pocketbase_token="$2"
+
+
+
+
 }
