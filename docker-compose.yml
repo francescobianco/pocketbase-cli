@@ -1,0 +1,8 @@
+services:
+  pb:
+    build: .
+    volumes:
+      - ./pb_migrations:/pb/pb_migrations
+      - ./pb_hooks:/pb/pb_hooks
+    ports:
+      - '8888:8080'
